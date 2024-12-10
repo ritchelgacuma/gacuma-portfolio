@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(SweetMajestyApp());
+}
+
+class SweetMajestyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Sweet Majesty Cakes',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: CakeMenuPage(),
+    );
+  }
+}
+
+class CakeMenuPage extends StatelessWidget {
+  final List<Map<String, dynamic>> cakes = [
+    {'name': 'Red Velvet', 'price': 25.0, 'color': Colors.red},
+    {'name': 'Chocolate Fudge', 'price': 30.0, 'color': Colors.brown},
+    {'name': 'Vanilla Delight', 'price': 20.0, 'color': Colors.yellow},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sweet Majesty Cakes'),
+        backgroundColor: Colors.pink,
+      ),
+      body: ListView.builder(
+        itemCount: cakes.length,
+        itemBuilder: (context, index) {
+          final cake = cakes[index];
+          return CakeCard(cake: cake);
+        },
+      ),
+    );
+  }
+}
+
+class CakeCard extends StatelessWidget {
+  final Map<String, dynamic> cake;
+
+  CakeCard({required this.cake});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      color: cake['color'], // Setting background color for each cake
+      child: ListTile(
+        title: Text(
+          cake['name'],
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        subtitle: Text(
+          '\$${cake['price']}',
+          style: TextStyle(color: Colors.white),
+        ),
+        trailing: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+          child: Text(
+            'Order',
+            style: TextStyle(color: cake['color']),
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Order Confirmed!'),
+                  content: Text('You ordered the ${cake['name']} cake.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,13 @@
+class SweetMajestyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Sweet Majesty Cakes',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: CakeMenuPage(),
+    );
+  }
+}
